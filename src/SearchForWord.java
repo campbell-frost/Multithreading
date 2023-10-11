@@ -7,11 +7,13 @@ public class SearchForWord {
     private static String[] searchWords;
 
     public static void main(String[] args) throws FileNotFoundException {
-        Scanner text = new Scanner(new FileInputStream("C:\\Users\\campb\\Documents\\WarAndPeace.txt"));
+
+        Scanner text = new Scanner(new FileInputStream("C:\\Users\\Campbell\\Documents\\WarAndPeace.txt"));
 
         Scanner in = new Scanner(System.in);
         System.out.println("Enter 6 words to search for:");
 
+        // Create new array to hold inputed strings
         searchWords = new String[6];
         for (int i = 0; i < 6; i++) {
             System.out.print("Word " + (i + 1) + ": ");
@@ -24,6 +26,8 @@ public class SearchForWord {
         for (int i = 0; i < 6; i++) {
             threads[i] = new Thread(new SearchForWordTask(text, "Thread " + (i + 1), searchWords[i]));
         }
+
+        long startTime = System.currentTimeMillis();
 
         // Start the threads
         for (Thread thread : threads) {
@@ -38,8 +42,10 @@ public class SearchForWord {
                 e.printStackTrace();
             }
         }
-
-        System.out.println("Total count: " + count);
+        
+        long endTime = System.currentTimeMillis();
+        long totalTime = (endTime - startTime);
+        System.out.println("Total count: " + count + " and took " + totalTime + "ms" );
     }
 
     // Create a Runnable task for searching the word
